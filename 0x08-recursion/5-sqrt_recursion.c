@@ -1,9 +1,11 @@
 #include "main.h"
+
 int actual_sqrt_recursion(int n, int i);
+
 /**
  *  _sqrt_recursion - prints squareroot of a number
  *  @n: integer
- *  Return: actual_sqrt_recursion(n)
+ *  Return: 0
  */
 
 int _sqrt_recursion(int n)
@@ -12,10 +14,11 @@ int _sqrt_recursion(int n)
 		return (-1);
 	return (actual_sqrt_recursion(n, 0));
 }
+
 /**
  *  actual_sqrt_recursion - prints natural squarerrot of a number
- *  @n: first integer
- *  @i: second integer
+ *  @i: iterator
+ *  @n: integer to be checked
  *  Return: actual_sqrt_recursion(n, i + 1)
  */
 
