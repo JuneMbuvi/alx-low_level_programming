@@ -1,1 +1,1 @@
-arguments and vectors
+C - argc, argv
