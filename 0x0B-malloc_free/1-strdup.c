@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 /**
@@ -8,11 +9,23 @@
  */
 char *_strdup(char *str)
 {
-	unsigned int size, strlen;
-	size = 0;
-	strlen = 0;
+	unsigned int size;
+	int i, j;
+	char *t;
 
-	if (!str || size < strlen)
+	size = 0;
+
+	if (!str)
 		return (NULL);
-	return (str);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	t = malloc(sizeof(char) * size + 1);
+	if (!t)
+		return (NULL);
+	for (j = 0; str[j]; j++)
+		t[j] = str[j];
+	return (t);
 }
