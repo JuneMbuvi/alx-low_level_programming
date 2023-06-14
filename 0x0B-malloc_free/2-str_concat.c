@@ -27,7 +27,7 @@ char *str_concat(char *s1, char *s2)
 		t[i] = s1[i]; /*cpy contents of s1 in their respective ith spaces*/
 	for (i = 0; i < len2; i++)
 		t[len1 + i] = s2[i];
-	t[size - 1] = '\0';
+	t[len1 + len2] = '\0';/*terminating null byte*/
 	return (t);
 
 }
