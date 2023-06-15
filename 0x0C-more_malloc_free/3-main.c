@@ -9,11 +9,10 @@
  * @size: the size of the memory to print
  * Return: Nothing.
  */
-
 void simple_print_buffer(int *buffer, unsigned int size)
 {
 	unsigned int i;
-	
+
 	i = 0;
 	while (i < size)
 	{
@@ -30,6 +29,7 @@ void simple_print_buffer(int *buffer, unsigned int size)
 	}
 	printf("\n");
 }
+
 /**
  * main - check the code
  * Return: Always 0.

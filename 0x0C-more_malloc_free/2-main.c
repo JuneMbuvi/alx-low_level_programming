@@ -11,8 +11,8 @@
  */
 void simple_print_buffer(char *buffer, unsigned int size)
 {
-	unsigned int i;
-	
+	    unsigned int i;
+
 	i = 0;
 	while (i < size)
 	{
@@ -29,7 +29,6 @@ void simple_print_buffer(char *buffer, unsigned int size)
 	}
 	printf("\n");
 }
-
 /**
  * main - check the code
  * Return: Always 0.
@@ -37,6 +36,7 @@ void simple_print_buffer(char *buffer, unsigned int size)
 int main(void)
 {
 	char *a;
+
 	a = _calloc(98, sizeof(char));
 	strcpy(a, "Best");
 	strcpy(a + 4, " School! :)\n");
