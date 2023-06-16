@@ -20,9 +20,12 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	if (!ptr)
 		return (malloc(new_size));
 
-	ptr = oldp;
 	/*if all these conditions fail, we can now reallocate*/
 	newp = malloc(new_size);
+	if (!newp)
+		return (NULL);
+
+	oldp = ptr;
 	if (new_size > old_size)
 	{
 		i = 0;
