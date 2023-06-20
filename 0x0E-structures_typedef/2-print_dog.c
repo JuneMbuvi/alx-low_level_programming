@@ -9,8 +9,6 @@ void print_dog(struct dog *d)
 {
 	if (!d->name)
 		d->name = "nil";
-	/**if (!d->age)
-		d->age = "nil";*/
 	if (!d->owner)
 		d->owner = "nil";
 	if (!d)
