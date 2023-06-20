@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 /**
- * strlenfn - measures length of strings name and owner
+ * _strlen - measures length of strings name and owner
  * @s: string to be measured
  * Return: length i
  */
@@ -41,7 +41,6 @@ char *_strcpy(char *dest, char *src)
 	dest[i] = '\0';
 	return (dest);
 }
-
 /**
  * new_dog - new dog
  * @name: name of new dog
@@ -79,3 +78,4 @@ dog_t *new_dog(char *name, float age, char *owner)
 
 	return (p);
 }
+
