@@ -10,6 +10,7 @@
  */
 void init_dog(struct dog *d, char *name, float age, char *owner)
 {
+	/*d = &my_dog;*/
 	if (!d)
 		d = malloc(sizeof(struct dog));
 	/*d = &my_dog;*/
