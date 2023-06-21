@@ -21,6 +21,7 @@ void print_elem_hex(int elem)
 {
 	printf("0x%x\n", elem);
 }
+
 /**
  * main - check the code
  *
