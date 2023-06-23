@@ -32,7 +32,7 @@ int op_mul(int a, int b)
 	return (a * b);
 }
 /**
- * op_add - returns the quotient of a and b
+ * op_div - returns the quotient of a and b
  * @a: first int
  * @b: second int
  * Return: quotient
@@ -42,7 +42,7 @@ int op_div(int a, int b)
 	return (a / b);
 }
 /**
- * op_add - returns the remainder of a and b
+ * op_mod - returns the remainder of a and b
  * @a: first int
  * @b: second int
  * Return: remainder
