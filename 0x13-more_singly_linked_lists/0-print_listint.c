@@ -1,22 +1,24 @@
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
 #include "lists.h"
 /**
- * print_listint - prints all elements in listint_t
- * @h: pointer for listint_t
- * Return: all nodes
+ * print_listint - prints all elements in a list
+ * @h: head pointer
+ * Return: count
  */
 size_t print_listint(const listint_t *h)
 {
-	size_t j = 0;
+	unsigned int count = 0;
 
 	while (h)
 	{
-		if (h->n)
+		if (!h)
+			printf("(nil)");
+		else
+		{
 			printf("%u\n", h->n);
-		h = h->next;
-		j++;
+			h = h->next;
+		}
+		count++;
 	}
-	return (j);
+	return (count);
 }
