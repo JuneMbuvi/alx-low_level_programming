@@ -2,40 +2,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-/**
- * create_buffer - allocates 1024 bytes to a buffer
- * @file: file whose contents are being stored in buffer
- * Return: buffer
- */
-char *create_buffer(char *file)
-{
-	char *buffer;
-
-	buffer = malloc(sizeof(char) * 1024);
-
-	if (!buffer)
-	{
-		dprintf(STDERR_FILENO,
-				"Error: Can't write to %s\n", file);
-		exit(99);
-	}
-	return (buffer);
-}
-/**
- * close_file - closes a file
- * @fd: fildes
- */
-void close_file(int fd)
-{
-	int j;
-
-	j = close(fd);
-	if (j == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
+void open_file(const char *file_from, const char *file_to);
+void cp_text(int fd1, int fd2, char *buff, const char *f1, const char *f2);
 /**
  * main - main file
  * @ac: argument count
@@ -44,44 +12,98 @@ void close_file(int fd)
  */
 int main(int ac, char *av[])
 {
-	int m, n, file_from, file_to;
-	char *buffer;
-
 	if (ac != 3)
 	{
 		dprintf(STDERR_FILENO,
 				"Usage: cp file_from file_to\n");
 		exit(97);
 	}
+	open_file(av[1], av[2]);
+	return (0);
+}
+/**
+ * open_file - opens files 1 and 2
+ * @file_from: source file
+ * @file_to: destination
+ * Return: void
+ */
+void open_file(const char *file_from, const char *file_to)
+{
+	int fd1, fd2;
+	char *buffer;
+	int fd1close, fd2close;
 
-	buffer = create_buffer(av[2]);
-	file_from = open(av[1], O_RDONLY);
-	file_to	= open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	m = read(file_from, buffer, 1024);
+	fd1 = open(file_from, O_RDONLY);
+	if (fd1 == -1)
+	{
+		dprintf(STDERR_FILENO,
+				"Error: Can't read from file %s\n", file_from);
+		exit(98);
+	}
+	fd2 = open(file_to, O_WRONLY | O_TRUNC | O_CREAT, 0664);
+	if (fd2 == -1)
+	{
+		dprintf(STDERR_FILENO,
+				"Error: Can't write to %s\n", file_to);
+		exit(99);
+	}
+	buffer = malloc(sizeof(char) * 1024);
+	if (buffer == NULL)
+	{
+		close(fd1);
+		close(fd2);
+		return;
+	}
+	cp_text(fd1, fd2, buffer, file_from, file_to);
 
-	do {
-		if (file_from == -1 || m == -1)
+	fd1close = close(fd1);
+	if (fd1close == -1)
+	{
+		dprintf(STDERR_FILENO,
+				"Error: Can't close fd %d\n", fd1);
+		exit(100);
+	}
+	fd2close = close(fd2);
+	if (fd2close == -1)
+	{
+		dprintf(STDERR_FILENO,
+				"Error: Can't close fd %d\n", fd2);
+		exit(100);
+	}
+}
+/**
+ * cp_text - copies contents of f1 to f2
+ * @fd1: fildes for f1
+ * @fd2: fildes for f2
+ * @f1: ptr to src file
+ * @f2: ptr to dest file
+ * @buff: storage space
+ * Return: void
+ */
+void cp_text(int fd1, int fd2, char *buff, const char *f1, const char *f2)
+{
+	int num_of_bytes, j;
+
+	num_of_bytes = 1; /*0 means the read function has completed*/
+	j = 1;
+
+	while (num_of_bytes != 0)
+	{
+		num_of_bytes = read(fd1, buff, 1024);
+		if (num_of_bytes == -1)
 		{
 			dprintf(STDERR_FILENO,
-					"Error: Can't read from file NAME_OF_THE_FILE%s\n", av[1]);
-			free(buffer);
+					"Error: Can't read from file %s\n", f1);
+			free(buff);
 			exit(98);
 		}
-
-		n = write(file_to, buffer, m);
-
-		if (file_to == -1 || n == -1)
+		j = write(fd2, buff, num_of_bytes);
+		if (j == -1)
 		{
 			dprintf(STDERR_FILENO,
-					"Error: Can't write to NAME_OF_THE_FILE%s\n", av[2]);
+					"Error: Can't write to %s\n", f2);
+			free(buff);
 			exit(99);
 		}
-		m = read(file_from, buffer, 1024);
-		file_to = open(av[2], O_WRONLY | O_APPEND);
-	} while (m > 0);
-	free(buffer);
-	close(file_from);
-	close(file_to);
-
-	return (0);
+	}
 }
