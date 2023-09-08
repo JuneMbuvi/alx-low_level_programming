@@ -17,9 +17,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 
 	if (!ht || !key)
 		return (0);
-
 	index = hash_djb2((const unsigned char *)key) % ht->size;
-	/*check whether the key already exists*/
 	temp = ht->array[index];
 	while (temp)
 	{
@@ -49,9 +47,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 		free(new);
 		return (0);
 	}
-	/*collision handling. Adding new node at beginning of list*/
 	new->next = ht->array[index];
 	ht->array[index] = new;
-
 	return (1);
 }
